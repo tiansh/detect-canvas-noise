@@ -7,9 +7,11 @@
 </head>
 <body>
   <h1>Detect Canvas Noise</h1>
-  <p>Some canvas blocking tools claim it cannot be detected by website. Is it true?</p>
-  <p>Is canvas noise enabled? <span id="final"></span></p>
+  <p>Some canvas noise / blocking tools claim they cannot be detected by website. Is it true?</p>
+  <p>The detector here is simple: We try to draw canvas with solid colors, and then read pixels on the canvas. Every pixels on the canvas should be the expected color if no canvas noise tools installed.</p>
+  <p>Is canvas noise enabled? <span id="final">Running...</span></p>
   <div id="results"></div>
   <script src="index.js"></script>
+  <noscript>JavaScript not enabled. No canvas should work.</noscript>
 </body>
 </html>

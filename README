@@ -1,0 +1,7 @@
+Detect Canvas Noise
+
+Some canvas noise / blocking tools claim they cannot be detected by website. Is it true?
+
+The detector here is simple: We try to draw canvas with solid colors, and then read pixels on the canvas. Every pixels on the canvas should be the expected color if no canvas noise tools installed.
+
+https://tiansh.github.io/detect-canvas-noise/
