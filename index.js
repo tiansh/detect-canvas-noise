@@ -3,7 +3,7 @@
  * @param {[number, number, number]} color 
  * @returns {string?}
  */
-const testColor = function (color, width, height) {
+const testColor = async function (color, width, height) {
   const canvas = document.createElement('canvas');
   Object.assign(canvas, { width, height });
   document.body.appendChild(canvas);
@@ -13,7 +13,10 @@ const testColor = function (color, width, height) {
   context.fillRect(0, 0, 100, 100);
   const url = canvas.toDataURL();
   const image = document.createElement('img');
-  image.src = url;
+  await new Promise(resolve => {
+    image.onload = () => resolve();
+    image.src = url;
+  });
   const results = document.getElementById('results');
   const result = document.createElement('div');
   result.className = 'result';
@@ -65,8 +68,8 @@ const testColor = function (color, width, height) {
 };
 
 window.addEventListener('load', () => {
-  setTimeout(() => {
-    const results = [
+  setTimeout(async () => {
+    const testcases = [
       [255, 255, 255],
       [255, 0, 0],
       [0, 255, 0],
@@ -79,28 +82,33 @@ window.addEventListener('load', () => {
       [102, 102, 102],
       [153, 153, 153],
       [204, 204, 204],
-    ].map(color => {
+    ];
+    let pass = true;
+    for (let i = 0; i < testcases.length; i++) {
+      const color = testcases[i];
       const results = document.getElementById('results');
       const line = document.createElement('hr');
       results.appendChild(line);
       const message = document.createElement('div');
       results.appendChild(message);
       try {
-        const result1 = testColor(color, 100, 100);
-        const result2 = testColor(color, 100, 100);
+        const result1 = await testColor(color, 100, 100);
+        const result2 = await testColor(color, 100, 100);
         if (result1 && result2 && result1 === result2) {
           message.textContent = 'Pass';
-          return true;
+          continue;
         }
       } catch (e) {
         message.textContent = 'JS Failed to run: ' + e;
-        return false;
+        pass = false;
+        continue;
       }
       message.textContent = 'Failed';
-      return false;
-    });
+      pass = false;
+      continue;
+    }
     const final = document.getElementById('final');
-    const text = results.every(Boolean) ? 'Not detected' : 'Detected';
+    const text = pass ? 'Not detected' : 'Detected';
     final.textContent = text;
   }, 0);
 });
