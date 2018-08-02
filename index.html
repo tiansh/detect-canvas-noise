@@ -4,12 +4,17 @@
   <meta charset="utf-8" />
   <title></title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    #results > div { float: left; }
+    #images > img { border: 1px solid black; max-width: 100%; }
+  </style>
 </head>
 <body>
   <h1>Detect Canvas Noise</h1>
   <p>Some canvas noise / blocking tools claim they cannot be detected by website. Is it true?</p>
   <p>The detector here is simple: We try to draw canvas with solid colors, and then read pixels on the canvas. Every pixels on the canvas should be the expected color if no canvas noise tools installed.</p>
   <p>Is canvas noise enabled? <span id="final">Running...</span></p>
+  <div id="images"></div>
   <div id="results"></div>
   <script src="index.js"></script>
   <noscript>JavaScript not enabled. No canvas should work.</noscript>
